@@ -1,0 +1,18 @@
+###
+(1) head.jsp 下面的几个 代码生成的 菜单，发布时需要屏蔽掉;
+
+(2) /WEB-INF/jsp/system/admin/left.jsp 
+	中需要去掉的部分： UI实例，数据字典，菜单管理
+
+${pd.IS_DEBUG}
+<c:choose>
+    <c:when test="${'member' == item.role_type}">
+        <span class="pending">会员</span>
+    </c:when>
+    <c:when test="${'operator' == item.role_type}">
+        <span class="pending">操作员</span>
+    </c:when>
+</c:choose>
+
+-- 调试模式下才能放出来的功能，用下面的代码包围
+<c:if test="${pd.IS_DEBUG == true}"> </c:if>

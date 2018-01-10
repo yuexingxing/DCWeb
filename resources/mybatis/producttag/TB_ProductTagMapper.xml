@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TB_ProductTagMapper">
+
+	<select id="findMaxId" parameterType="String" resultType="int">
+		select
+		max(id) from tao4j_product_tag
+	</select>
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into tao4j_product_tag(
+		id,
+		product_id,
+		tag_id,
+		tag_code,
+		order_num,
+		actived,
+		created_at,
+		updated_at
+		) values (
+		#{id},
+		#{product_id},
+		#{tag_id},
+		#{tag_code},
+		#{order_num},
+		#{actived},
+		#{created_at},
+		#{updated_at}
+		)
+	</insert>
+
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from tao4j_product_tag
+		where
+		ID = #{ID}
+	</delete>
+
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update tao4j_product_tag
+		set
+		PRODUCT_ID = #{PRODUCT_ID},
+		TAG_ID = #{TAG_ID},
+		TAG_CODE = #{TAG_CODE},
+		ORDER_NUM = #{ORDER_NUM},
+		ACTIVED = #{ACTIVED},
+		UPDATED_AT =
+		#{UPDATED_AT}
+		where
+		ID = #{ID}
+	</update>
+
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		ID,
+		PRODUCT_ID,
+		TAG_ID,
+		TAG_CODE,
+		ORDER_NUM,
+		ACTIVED,
+		CREATED_AT,
+		UPDATED_AT
+		from
+		tao4j_product_tag
+		where
+		ID = #{ID}
+	</select>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		a.ID,
+		a.PRODUCT_ID,
+		a.TAG_ID,
+		a.TAG_CODE,
+		a.ORDER_NUM,
+		a.ACTIVED,
+		a.CREATED_AT,
+		a.UPDATED_AT
+		from
+		tao4j_product_tag a
+	</select>
+
+	<!-- 列表 -->
+	<select id="datalistSearchPage" parameterType="String"
+		resultType="pd">
+		select
+		a.ID,
+		a.PRODUCT_ID,
+		a.TAG_ID,
+		a.TAG_CODE,
+		a.ORDER_NUM,
+		a.ACTIVED,
+		a.CREATED_AT,
+		a.UPDATED_AT
+		from
+		tao4j_product_tag a
+		where
+		a.TAG_CODE
+		=
+		#{data}
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		a.ID,
+		a.PRODUCT_ID,
+		a.TAG_ID,
+		a.TAG_CODE,
+		a.ORDER_NUM,
+		a.ACTIVED,
+		a.CREATED_AT,
+		a.UPDATED_AT
+		from
+		tao4j_product_tag a
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from tao4j_product_tag
+		where
+		ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 修改产品tag表排序 -->
+	<update id="editOrderNum" parameterType="pd">
+		update
+		tao4j_product_tag
+		set
+		ORDER_NUM = #{order_num},
+		UPDATED_AT = #{updated_at}
+		where
+		PRODUCT_ID
+		=
+		#{product_id}
+		and TAG_CODE = #{tag_code}
+	</update>
+
+
+</mapper>

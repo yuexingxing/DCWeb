@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TB_ProductMapper">
+
+	<select id="findMaxId_product" parameterType="String"
+		resultType="int">
+		select
+		max(id) from tao4j_product
+	</select>
+
+	<select id="findMaxId_interest" parameterType="String"
+		resultType="int">
+		select
+		max(id) from tao4j_product_interest
+	</select>
+
+	<select id="checkStatisticById" parameterType="String"
+		resultType="int">
+		select
+		count(product_id) from tao4j_product_statistics
+		where
+		product_id = #{product_id}
+	</select>
+
+
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into TB_TB_PRODUCT(
+		NAME,
+		TB_PRODUCT_ID
+		) values (
+		#{NAME},
+		#{TB_PRODUCT_ID}
+		)
+	</insert>
+
+	<!-- 新增产品 -->
+	<insert id="saveProduct" parameterType="pd">
+		insert into
+		tao4j_product(
+		id,
+		code,
+		name,
+		phone,
+		icon_url,
+		category_id,
+		category,
+		product_type,
+		company_url,
+		company_h5_url,
+		credit_max_amount,
+		credit_min_amount,
+		credit_max_date,
+		credit_min_date,
+		default_credit_date,
+		default_amount,
+		default_repayment,
+		default_total_interest,
+		default_interest,
+		rate,
+		rate_area,
+		rate_type,
+		apply,
+		apply_condition,
+		apply_explain,
+		process_img,
+		remark,
+		recommend_desc,
+		proof,
+		tags,
+		jump_type,
+		jump_url,
+		version,
+		order_num,
+		actived,
+		created_at,
+		updated_at
+		) values (
+		#{id},
+		#{code},
+		#{name},
+		#{phone},
+		#{icon_url},
+		#{category_id},
+		#{category},
+		#{product_type},
+		#{company_url},
+		#{company_h5_url},
+		#{credit_max_amount},
+		#{credit_min_amount},
+		#{credit_max_date},
+		#{credit_min_date},
+		#{default_credit_date},
+		#{default_amount},
+		#{default_repayment},
+		#{default_total_interest},
+		#{default_interest},
+		#{rate},
+		#{rate_area},
+		#{rate_type},
+		#{apply},
+		#{apply_condition},
+		#{apply_explain},
+		#{process_img},
+		#{remark},
+		#{recommend_desc},
+		#{proof},
+		#{tags},
+		#{jump_type},
+		#{jump_url},
+		#{version},
+		#{order_num},
+		#{actived},
+		#{created_at},
+		#{updated_at}
+		)
+	</insert>
+
+	<!-- 新增利率 -->
+	<insert id="saveInterest" parameterType="pd">
+		insert into
+		tao4j_product_interest(
+		id,
+		product_id,
+		credit_date,
+		interest,
+		type,
+		version,
+		extra,
+		actived,
+		created_at,
+		updated_at
+		) values (
+		#{id},
+		#{product_id},
+		#{credit_date},
+		#{interest},
+		#{type},
+		#{version},
+		#{extra},
+		#{actived},
+		#{created_at},
+		#{updated_at}
+		)
+	</insert>
+
+	<!-- 新增统计 -->
+	<insert id="saveStatistic" parameterType="pd">
+		insert into
+		tao4j_product_statistics(
+		product_id,
+		join_count,
+		view_count,
+		version,
+		actived,
+		created_at,
+		updated_at
+		) values (
+		#{product_id},
+		#{join_count},
+		#{view_count},
+		#{version},
+		#{actived},
+		#{created_at},
+		#{updated_at}
+		)
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from TB_TB_PRODUCT
+		where
+		TB_PRODUCT_ID = #{TB_PRODUCT_ID}
+	</delete>
+
+	<!-- 删除 商品 -->
+	<delete id="deleteProduct" parameterType="pd">
+		delete from
+		tao4j_product
+		where
+		id = #{id}
+	</delete>
+
+	<!-- 删除利率 -->
+	<delete id="deleteInterest" parameterType="String">
+		delete from
+		tao4j_product_interest
+		where
+		id = #{id}
+	</delete>
+
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update TB_TB_PRODUCT
+		set
+		NAME =
+		#{NAME},
+		TB_PRODUCT_ID = TB_PRODUCT_ID
+		where
+		TB_PRODUCT_ID =
+		#{TB_PRODUCT_ID}
+	</update>
+
+	<!-- 修改商品 -->
+	<update id="editProduct" parameterType="pd">
+		update
+		tao4j_product
+		set
+		code = #{code},
+		name = #{name},
+		phone = #{phone},
+		category_id =
+		#{category_id},
+		category = #{category},
+		product_type =
+		#{product_type},
+		company_url = #{company_url},
+		company_h5_url =
+		#{company_h5_url},
+		credit_max_amount = #{credit_max_amount},
+		credit_min_amount =
+		#{credit_min_amount},
+		credit_max_date =
+		#{credit_max_date},
+		credit_min_date = #{credit_min_date},
+		default_credit_date =
+		#{default_credit_date},
+		default_amount =
+		#{default_amount},
+		default_repayment = #{default_repayment},
+		default_total_interest =
+		#{default_total_interest},
+		default_interest =
+		#{default_interest},
+		rate
+		=
+		#{rate},
+		rate_area =
+		#{rate_area},
+		rate_type =
+		#{rate_type},
+		apply =
+		#{apply},
+		apply_condition = #{apply_condition},
+		apply_explain =
+		#{apply_explain},
+		process_img = #{process_img},
+		remark =
+		#{remark},
+		recommend_desc =
+		#{recommend_desc},
+		proof = #{proof},
+		tags =
+		#{tags},
+		jump_type =
+		#{jump_type},
+		jump_url = #{jump_url},
+		version =
+		#{version},
+		order_num =
+		#{order_num},
+		actived = #{actived},
+		created_at =
+		#{created_at},
+		updated_at = #{updated_at}
+		where
+		id = #{id}
+	</update>
+
+	<!-- 修改产品表排序 -->
+	<update id="editOrderNum" parameterType="pd">
+		update
+		tao4j_product
+		set
+		order_num = #{order_num},
+		updated_at = #{updated_at}
+		where
+		name = #{name}
+	</update>
+
+	<!-- 修改商品图片icon -->
+	<update id="editProductIcon" parameterType="pd">
+		update
+		tao4j_product
+		set
+		icon_url = #{icon_url},
+		updated_at = #{updated_at}
+		where
+		id = #{id}
+	</update>
+
+	<!-- 修改商品图片process_img -->
+	<update id="editProductProcessImg" parameterType="pd">
+		update
+		tao4j_product
+		set
+		process_img = #{process_img},
+		updated_at =
+		#{updated_at}
+		where
+		id = #{id}
+	</update>
+
+	<!-- 修改利率 -->
+	<update id="editInterest" parameterType="pd">
+		update
+		tao4j_product_interest
+		set
+		credit_date = #{credit_date},
+		interest =
+		#{interest},
+		type = #{type},
+		updated_at = #{updated_at}
+		where
+		id = #{id}
+	</update>
+
+	<!-- 修改统计 -->
+	<update id="editStatistic" parameterType="pd">
+		update
+		tao4j_product_statistics
+		set
+		join_count = #{join_count},
+		view_count =
+		#{view_count},
+		updated_at = #{updated_at}
+		where
+		product_id =
+		#{product_id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById_product" parameterType="String" resultType="pd">
+		select
+		*
+		from
+		tao4j_product
+		where
+		id = #{id}
+	</select>
+
+
+	<!-- 列表 where a.actived = 1
+		order by a.order_num desc; -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		*
+		from
+		tao4j_product a
+		where a.actived = 1
+		order by a.order_num desc
+	</select>
+
+	<!-- 列表 -->
+	<select id="list_product_search" parameterType="String"
+		resultType="pd">
+		select
+		*
+		from
+		tao4j_product
+		where code like #{data}
+		and actived
+		= 1
+		order by order_num desc;
+	</select>
+
+	<select id="list_interest" parameterType="page" resultType="pd">
+		select
+		*
+		from
+		tao4j_product_interest
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		*
+		from
+		tao4j_product
+		where actived = 1
+		order by order_num desc;
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from TB_TB_PRODUCT
+		where
+		TB_PRODUCT_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 通过ID获取利率数据 -->
+	<select id="findByProductId_interest" parameterType="String"
+		resultType="pd">
+		select
+		*
+		from
+		tao4j_product_interest
+		where
+		product_id =
+		#{product_id}
+	</select>
+
+	<!-- 通过产品name获取利率数据 -->
+	<select id="findByProductName" parameterType="String"
+		resultType="pd">
+		select
+		*
+		from
+		tao4j_product
+		where
+		name =
+		#{name}
+	</select>
+
+	<select id="findById_interest" parameterType="String"
+		resultType="pd">
+		select
+		*
+		from
+		tao4j_product_interest
+		where
+		id = #{id}
+	</select>
+	<!-- 通过ID获取统计数据 -->
+	<select id="findById_statistic" parameterType="String"
+		resultType="pd">
+		select
+		*
+		from
+		tao4j_product_statistics
+		where
+		product_id =
+		#{product_id}
+	</select>
+</mapper>
