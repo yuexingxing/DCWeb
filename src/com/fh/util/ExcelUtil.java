@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.fh.entity.DataInfo;
 import com.fh.entity.SortOrderNum;
 
 /**
@@ -136,6 +137,106 @@ public class ExcelUtil {
 		return dataList;
 	}
 
+	public static List<DataInfo> testAiMa(String file){
+
+		List<DataInfo> dataList = new ArrayList<DataInfo>();
+		InputStream is;
+		try {
+			is = new FileInputStream(file);
+
+			XSSFWorkbook xssfWorkbook = new XSSFWorkbook(is);
+			// 获取每一个工作薄
+			for (int numSheet = 0; numSheet < xssfWorkbook.getNumberOfSheets(); numSheet++) {
+				XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(numSheet);
+				if (xssfSheet == null) {
+					continue;
+				}
+				// 获取当前工作薄的每一行
+				for (int rowNum = 0; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+					XSSFRow xssfRow = xssfSheet.getRow(rowNum);
+					if (xssfRow != null) {
+						XSSFCell name = xssfRow.getCell(0);
+						//读取第一列数据
+						XSSFCell num1 = xssfRow.getCell(1);
+						XSSFCell num2 = xssfRow.getCell(2);
+
+						if(num1 == null || num2 == null){
+							continue;
+						}
+
+						DataInfo dataInfo = new DataInfo();
+						dataInfo.setLat(num1.toString());
+						dataInfo.setLon(num2.toString());
+
+						dataList.add(dataInfo);
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dataList;
+	}
+
+	/**
+	 * 获取Excel中的数据
+	 * @param file
+	 * @return
+	 */
+	public static List<DataInfo> getExcelInfo(String file){
+
+		List<DataInfo> dataList = new ArrayList<DataInfo>();
+		InputStream is;
+		try {
+			is = new FileInputStream(file);
+
+			XSSFWorkbook xssfWorkbook = new XSSFWorkbook(is);
+			// 获取每一个工作薄
+			for (int numSheet = 0; numSheet < xssfWorkbook.getNumberOfSheets(); numSheet++) {
+				XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(numSheet);
+				if (xssfSheet == null) {
+					continue;
+				}
+				// 获取当前工作薄的每一行
+				for (int rowNum = 0; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+					XSSFRow xssfRow = xssfSheet.getRow(rowNum);
+					if (xssfRow != null) {
+						XSSFCell name = xssfRow.getCell(0);
+						//读取第一列数据
+						XSSFCell num1 = xssfRow.getCell(1);
+						XSSFCell num2 = xssfRow.getCell(2);
+						XSSFCell num3 = xssfRow.getCell(3);
+						XSSFCell num4 = xssfRow.getCell(4);
+
+						DataInfo dataInfo = new DataInfo();
+						dataInfo.setData1(num1.toString() + "");
+						dataInfo.setData2(num2.toString() + "");
+
+						if(num3 != null){
+							dataInfo.setData3(num3.toString() + "");
+						}else{
+							dataInfo.setData3("");
+						}
+
+						dataInfo.setData4(num4.toString() + "");
+
+						dataList.add(dataInfo);
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dataList;
+	}
+
+
 	// 转换数据格式
 	public static String getValue(HSSFCell hssfCell) {
 		if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
@@ -169,7 +270,7 @@ public class ExcelUtil {
 					(int) Double.parseDouble(num3),(int) Double.parseDouble(num4),
 					(int) Double.parseDouble(num5),(int) Double.parseDouble(num6),
 					(int) Double.parseDouble(num7)};
-			
+
 			sortOrderNum = new SortOrderNum();
 			sortOrderNum.setName(name);
 			sortOrderNum.setNum(num);
@@ -218,6 +319,14 @@ public class ExcelUtil {
 			System.out.println("文件格式错误");
 			return null;
 		}
+	}
+
+	public static List<DataInfo> readAiMaExcel(){
+
+		String file = "D:/test1.xlsx";
+		List<DataInfo> dataList = testAiMa(file);
+
+		return dataList;
 	}
 
 	public static void main(String[] args) {  
